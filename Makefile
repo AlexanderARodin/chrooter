@@ -2,10 +2,10 @@ help:
 	@cat Makefile
 
 edit:
-	@echo 'nothing yet'
+	@nvim scripts/run-microvm.sh
 
 run:
-	@echo 'nothing yet'
+	@./scripts/run-microvm.sh
 
 # # # # # # # #
 pull:
