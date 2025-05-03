@@ -9,15 +9,17 @@ run:
 
 # #######################################
 # testing
-shell.root:
-	@./scripts/xxsr-chroot-shell-root.sh
-shell.user:
-	@./scripts/xxsu-chroot-shell-user.sh
+chroot:
+	@./scripts/xxxx-chroot.sh /bin/sh
 
-mounted.root:
-	@./scripts/xxmr-chroot-mounted-root.sh
-mounted.user:
-	@./scripts/xxmu-chroot-mounted-user.sh
+chroot.install:
+	@./scripts/xxxx-chroot.sh /install
+
+unshare.root:
+	@./scripts/xxxx-unshare-from-root.sh /bin/sh
+
+unshare.user:
+	@./scripts/xxxx-unshare-from-user.sh /bin/sh
 	
 
 newroot: clean

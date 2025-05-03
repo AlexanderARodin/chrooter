@@ -5,6 +5,7 @@ set -e
 
 # BIN dir
 sudo mkdir -v $NEWROOT/bin
+sudo mkdir -v $NEWROOT/proc
 
 # # # # # # # # # # # # # #
 # BUSYBOX
