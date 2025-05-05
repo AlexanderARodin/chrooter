@@ -1,19 +1,20 @@
 #!/bin/bash
 set -e
+. scripts/.lib
 
-. .config
-
-# BIN dir
+# dirs etc
 sudo mkdir -v $NEWROOT/bin
 sudo mkdir -v $NEWROOT/proc
+sudo mkdir -v $NEWROOT/dev
+sudo mknod    $NEWROOT/dev/console c 5 1
 
 # # # # # # # # # # # # # #
 # BUSYBOX
-sudo cp -v $BUSYBOX $NEWROOT/bin/busybox
+sudo cp -v $BUSYBOX/busybox $NEWROOT/bin/
 
 # # # # # # # # # # # # # #
 # UUTILS/COREUTILS
-sudo cp -v $UUTILS $NEWROOT/bin/coreutils
+sudo cp -v $UUTILS/coreutils $NEWROOT/bin/
 
 
 # # # # # # # # # # # # # #

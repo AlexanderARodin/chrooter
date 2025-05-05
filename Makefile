@@ -1,35 +1,40 @@
+include scripts/.config
+
 help:
 	@cat Makefile
 
 edit:
-	#@nvim scripts/run-microvm.sh
+	@nvim scripts/xx99-build-initrd.sh
 
 run:
-	#@./scripts/run-microvm.sh
+	@scripts/~run-microvm.sh~
 
 # #######################################
 # testing
 chroot:
-	@./scripts/xxxx-chroot.sh /bin/sh
+	@scripts/run-container.sh --chroot $(NEWROOT) /bin/sh
+unshare.root:
+	@scripts/run-container.sh --unshare-root $(NEWROOT) /bin/sh
+unshare.user:
+	@scripts/run-container.sh --unshare-user $(NEWROOT) /bin/sh
 
 chroot.install:
 	@./scripts/xxxx-chroot.sh /install
 
-unshare.root:
-	@./scripts/xxxx-unshare-from-root.sh /bin/sh
-
-unshare.user:
-	@./scripts/xxxx-unshare-from-user.sh /bin/sh
-	
 
 newroot: clean
 	@echo '[NEW minimal ROOT]'
 	@./scripts/xx10-coreutils+.sh
+	@./scripts/xx50-install-init.sh
 
 clean:
 	@echo '[CLEAN NEWROOT]'
 	@./scripts/xx00-wipeoff-newroot.sh
 
+# #######################################
+# build initrd
+initrd: 
+	@./scripts/xx99-build-initrd.sh
 
 # # # # # # # #
 pull:
