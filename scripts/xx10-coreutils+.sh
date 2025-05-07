@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-. scripts/.lib
+#. scripts/.lib
 
 # dirs etc
 sudo mkdir -v $NEWROOT/bin

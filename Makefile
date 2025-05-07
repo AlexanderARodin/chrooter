@@ -12,23 +12,24 @@ run:
 # #######################################
 # testing
 chroot:
-	@scripts/run-container.sh --chroot $(NEWROOT) /bin/sh
+	@scripts/run-container.sh --chroot target/$(ROOTDIR) /bin/sh
 unshare.root:
-	@scripts/run-container.sh --unshare-root $(NEWROOT) /bin/sh
+	@scripts/run-container.sh --unshare-root target/$(ROOTDIR) /bin/sh
 unshare.user:
-	@scripts/run-container.sh --unshare-user $(NEWROOT) /bin/sh
+	@scripts/run-container.sh --unshare-user target/$(ROOTDIR) /bin/sh
 
 chroot.install:
-	@./scripts/xxxx-chroot.sh /install
+	@scripts/run-container.sh --chroot target/$(ROOTDIR) /install
 
-
+# #######################################
+# create root
 newroot: clean
 	@echo '[NEW minimal ROOT]'
 	@./scripts/xx10-coreutils+.sh
 	@./scripts/xx50-install-init.sh
 
 clean:
-	@echo '[CLEAN NEWROOT]'
+	@echo '[CLEAN ROOTDIR]'
 	@./scripts/xx00-wipeoff-newroot.sh
 
 # #######################################
