@@ -3,6 +3,8 @@ include scripts/.config
 help:
 	@cat Makefile
 
+allin: newroot corebox copy.init initrd image
+
 edit:
 	@nvim scripts/xx10-corebox.sh
 
@@ -40,9 +42,11 @@ clean:
 	@scripts/xx00-cleanup.sh
 
 # #######################################
-# build initrd
+# build initrd OR image
 initrd: 
 	@./scripts/xx99-build-initrd.sh
+image: 
+	@./scripts/xx99-build-image.sh
 
 # # # # # # # #
 pull:
