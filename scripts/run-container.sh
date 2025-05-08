@@ -3,26 +3,28 @@ set -e
 ROOT_DIR_PATH="$2"
 CMD="$3"
 
+# MAIN logic
 case $1 in
 	--chroot)
-		sudo chroot "$ROOT_DIR_PATH" "$CMD"
+		sudo env -i \
+			/sbin/chroot "$ROOT_DIR_PATH" "$CMD"
 		;;
 
 	--unshare-root)
-		sudo unshare --fork \
-			--mount --uts --ipc --net \
-			--pid --mount-proc \
-			--root="$ROOT_DIR_PATH" \
-			"$CMD"
+		sudo env -i \
+			unshare --fork \
+				--mount --uts --ipc --net --pid --mount-proc \
+				--root="$ROOT_DIR_PATH" \
+				"$CMD"
 		;;
 
 	--unshare-user)
-		unshare --fork \
-			-Ur \
-			--mount --uts --ipc --net \
-			--pid --mount-proc \
-			--root="$ROOT_DIR_PATH" \
-			"$CMD"
+		env -i \
+			unshare --fork \
+				-Ur \
+				--mount --uts --ipc --net --pid --mount-proc \
+				--root="$ROOT_DIR_PATH" \
+				"$CMD"
 		;;
 
 	--help)

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-. scripts/.lib
 
 # INIT
-sudo cp -vf assets/min-init $NEWROOT/init
-sudo chmod +x $NEWROOT/init
+cd target/current-root
+cp -vf ../../assets/min-init init
+chmod -v +x init

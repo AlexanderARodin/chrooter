@@ -4,33 +4,40 @@ help:
 	@cat Makefile
 
 edit:
-	@nvim scripts/xx99-build-initrd.sh
+	@nvim scripts/xx10-corebox.sh
 
 run:
-	@scripts/~run-microvm.sh~
+	@scripts/run-container.sh --unshare-user \
+		'target/current-root' '/bin/sh'
 
 # #######################################
 # testing
 chroot:
-	@scripts/run-container.sh --chroot target/$(ROOTDIR) /bin/sh
+	@scripts/run-container.sh --chroot \
+		'target/current-root' '/bin/sh'
 unshare.root:
-	@scripts/run-container.sh --unshare-root target/$(ROOTDIR) /bin/sh
+	@scripts/run-container.sh --unshare-root \
+		'target/current-root' '/bin/sh'
 unshare.user:
-	@scripts/run-container.sh --unshare-user target/$(ROOTDIR) /bin/sh
+	@scripts/run-container.sh --unshare-user \
+		'target/current-root' '/bin/sh'
 
 chroot.install:
-	@scripts/run-container.sh --chroot target/$(ROOTDIR) /install
+	@scripts/run-container.sh --chroot \
+		'target/current-root' '/install'
 
 # #######################################
 # create root
-newroot: clean
-	@echo '[NEW minimal ROOT]'
-	@./scripts/xx10-coreutils+.sh
-	@./scripts/xx50-install-init.sh
+copy.init:
+	@scripts/xx50-install-init.sh
+corebox:
+	@export BUSYBOX=$(BUSYBOX) export UUTILS=$(UUTILS) \
+		&& scripts/xx10-corebox.sh
+newroot:
+	@scripts/xx01-create-empty-root.sh
 
 clean:
-	@echo '[CLEAN ROOTDIR]'
-	@./scripts/xx00-wipeoff-newroot.sh
+	@scripts/xx00-cleanup.sh
 
 # #######################################
 # build initrd
