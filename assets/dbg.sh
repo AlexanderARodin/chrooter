@@ -1,6 +1,5 @@
 #!/bin/sh
 set -e
-set -x
 
 SUB_ROOT='/.chroot-system'
   LOWER0="$SUB_ROOT/lower0"

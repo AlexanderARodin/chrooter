@@ -3,7 +3,12 @@ set -e
 ROOT_DIR_PATH="$2"
 CMD="$3"
 
+# #########################
 # MAIN logic
+echo
+echo '# ################# #'
+echo '# [ ENTERING ROOT ] #'
+
 case $1 in
 	--chroot)
 		sudo env -i \

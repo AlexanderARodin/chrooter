@@ -5,35 +5,34 @@ help:
 
 # #######################################
 # dev
-allin: newroot corebox modules copy.init initrd sqsh.image
+allin: newroot corebox modules initrd sqsh.image
 
 edit:
 	@nvim assets/dbg.sh
 
-run:
+run: chroot-init
 	@scripts/run-container.sh --unshare-user \
-		'target/current-root' '/bin/sh'
+		'target/current-root' '/init'
 
 # #######################################
 # testing
-chroot:
+chroot.hardcore:
 	@scripts/run-container.sh --chroot \
 		'target/current-root' '/bin/sh'
-unshare.root:
+unshare.root: chroot-init
 	@scripts/run-container.sh --unshare-root \
-		'target/current-root' '/bin/sh'
-unshare.user:
+		'target/current-root' '/init'
+unshare.user: chroot-init
 	@scripts/run-container.sh --unshare-user \
-		'target/current-root' '/bin/sh'
+		'target/current-root' '/init'
 
-chroot.install:
-	@scripts/run-container.sh --chroot \
-		'target/current-root' '/install'
 
 # #######################################
 # fill the root
-copy.init:
-	@scripts/xx50-install-init.sh
+system-init:
+	@scripts/xx80-reinstall-init.sh min-init
+chroot-init:
+	@scripts/xx80-reinstall-init.sh chroot-init
 
 modules:
 	@scripts/xx15-modules.sh
@@ -53,10 +52,10 @@ clean:
 
 # #######################################
 # build initrd OR image
-initrd: 
-	@./scripts/xx99-build-initrd.sh
-sqsh.image: 
-	@./scripts/xx99-build-image.sh
+initrd: system-init
+	@scripts/xx99-build-initrd.sh
+sqsh.image: chroot-init
+	@scripts/xx99-build-image.sh
 
 # # # # # # # #
 pull:
