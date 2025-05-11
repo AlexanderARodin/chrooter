@@ -8,4 +8,4 @@ echo $ROOT_DIR
 cd target/current-root
 find . | cpio -o -H newc -V | gzip -9 > ../$ROOT_DIR.gz
 cd ..
-ln -sv "$ROOT_DIR.gz" current-initrd.gz
+ln -sfv "$ROOT_DIR.gz" current-initrd.gz

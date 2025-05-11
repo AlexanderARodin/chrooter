@@ -3,10 +3,12 @@ include scripts/.config
 help:
 	@cat Makefile
 
-allin: newroot corebox copy.init initrd image
+# #######################################
+# dev
+allin: newroot corebox modules copy.init initrd sqsh.image
 
 edit:
-	@nvim scripts/xx10-corebox.sh
+	@nvim assets/dbg.sh
 
 run:
 	@scripts/run-container.sh --unshare-user \
@@ -29,9 +31,17 @@ chroot.install:
 		'target/current-root' '/install'
 
 # #######################################
-# create root
+# fill the root
 copy.init:
 	@scripts/xx50-install-init.sh
+
+modules:
+	@scripts/xx15-modules.sh
+reimport-modules:
+	@rm -rvf target/modules-import/*
+	@cd ../linux-kernel && make modules_install INSTALL_MOD_PATH=../chrooter/target/modules-import/
+	@rm -vf target/modules-import/lib/modules/6.12.27/build
+
 corebox:
 	@export BUSYBOX=$(BUSYBOX) export UUTILS=$(UUTILS) \
 		&& scripts/xx10-corebox.sh
@@ -45,7 +55,7 @@ clean:
 # build initrd OR image
 initrd: 
 	@./scripts/xx99-build-initrd.sh
-image: 
+sqsh.image: 
 	@./scripts/xx99-build-image.sh
 
 # # # # # # # #

@@ -1,12 +1,9 @@
 #!/bin/bash
 set -e
-#. target/env
 
 echo "[ENTER ROOT DIR]"
 cd target/current-root
 mkdir -vp bin
-pwd
-ls -lah ../
 cp -v ../$BUSYBOX/busybox       bin
 cp -v ../$BUSYBOX/busybox.suid  bin || true
 cp -v ../$UUTILS/coreutils      bin
@@ -26,3 +23,10 @@ for l in $LIST_UU
 do
 	ln -vsr ./coreutils $l
 done
+
+# # # # # # # # # # # # # #
+# preparing chroot sub-linux
+cd ..
+mkdir -p .chroot-system/lower0/
+mv bin .chroot-system/lower0/
+ln -s .chroot-system/lower0/bin
