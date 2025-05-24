@@ -38,7 +38,8 @@ modules:
 	@scripts/xx15-modules.sh
 reimport-modules:
 	@rm -rvf target/modules-import/*
-	@cd ../linux-kernel && make modules_install INSTALL_MOD_PATH=../chrooter/target/modules-import/
+	@#cd ../linux-kernel && make modules_install INSTALL_MOD_PATH=../chrooter/target/modules-import/
+	@cd ../linux-6.12.27 && make modules_install INSTALL_MOD_PATH=../chrooter/target/modules-import
 	@rm -vf target/modules-import/lib/modules/6.12.27/build
 
 corebox:
